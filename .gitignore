@@ -1,6 +1,4 @@
 *.o
 *.out
 *.log
-/build/
 /bin/
-Makefile
