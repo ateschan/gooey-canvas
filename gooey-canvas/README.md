@@ -22,10 +22,9 @@ You will need to make an api token through canvas.
 - Copy the generated token.
 
 - Paste to website
-    
-- https://canvas.instructure.com/doc/api/
 
-### Using the canvas api
+### Using the [canvas api](https://canvas.instructure.com/doc/api/)
+
 #### Prompting from terminal
 - curl https://alamo.instructure.com/api/v1/courses/1530834/assignments \
      -H 'Authorization: Bearer *API TOKEN*'
