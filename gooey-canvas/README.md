@@ -33,10 +33,6 @@ my id with yours by calling https://alamo.instructure.com/api/v1/courses and loo
 - curl https://alamo.instructure.com/api/v1/courses/{course_id}/assignments \
      -H 'Authorization: Bearer *API TOKEN*'
 
-#### Prompting from terminal
-- curl https://alamo.instructure.com/api/v1/courses/{course_id}/assignments \
-     -H 'Authorization: Bearer *API TOKEN*'
-
 #### Accessing grade data
 https://alamo.instructure.com/api/v1/users/{user_id}/enrollments
 
