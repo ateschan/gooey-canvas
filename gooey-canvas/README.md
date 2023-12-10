@@ -9,21 +9,21 @@ This project is built Tauri, Svelte and TypeScript in Vite.
 ## Canvas REST API Documentation
 You will need to make an api token through canvas.
 
-Setting up API Key for Project
+### Setting up API Key for Project
 
-    [Go to Alamo Profile Settings.](https://alamo.instructure.com/profile/settings)
+- [Go to Alamo Profile Settings.](https://alamo.instructure.com/profile/settings)
 
-    Click on the API Access Tokens tab.
+- Click on the API Access Tokens tab.
 
-    Click on New Access Token.
+- Click on New Access Token.
 
-    Enter a name for the token and click Generate Token.
+- Enter a name for the token and click Generate Token.
 
-    Copy the generated token.
+- Copy the generated token.
 
-    Paste to website
+- Paste to website
     
-https://canvas.instructure.com/doc/api/
+- https://canvas.instructure.com/doc/api/
 
 ### Using the canvas api
 #### Prompting from terminal
