@@ -26,7 +26,7 @@ You will need to make an api token through canvas.
 ### Using the [canvas api](https://canvas.instructure.com/doc/api/)
 Unfortunately, accessing grade data directly is inaccessable to student accounts direclty though the api,
 so we will be having to look at the submission data to determine grades for assignments.
-<span style="color : #ffd700">API TOKEN</span>'
+
 Each user has a unique id, when you are calling the api from your browser you will need to replace
 my {user_id} with yours by calling https://alamo.instructure.com/api/v1/courses and looking under 0: enrollments: 0: user_id:
 
@@ -35,7 +35,7 @@ Same goes for assingment and course data.
 
 #### Prompting from terminal
 - curl https://alamo.instructure.com/api/v1/courses/{course_id}/assignments \
-     -H 'Authorization: Bearer <span style="color : #ffd700">API TOKEN</span>'
+     -H 'Authorization: Bearer {API TOKEN} '
 
 #### Accessing grade data
 https://alamo.instructure.com/api/v1/users/{user_id}/enrollments
