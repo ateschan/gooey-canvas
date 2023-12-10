@@ -1,6 +1,6 @@
-# Tauri + Svelte + Typescript
+# Gooey Canvas
 
-This template should help get you started developing with Tauri, Svelte and TypeScript in Vite.
+This project is built Tauri, Svelte and TypeScript in Vite.
 
 ## Recommended IDE Setup
 
