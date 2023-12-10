@@ -24,34 +24,38 @@ You will need to make an api token through canvas.
 - Paste to website
 
 ### Using the [canvas api](https://canvas.instructure.com/doc/api/)
+Each user has a unique id, in my case it is 3810399, when you are calling the api from your browser you will need to replace
+my id with yours by calling https://alamo.instructure.com/api/v1/courses and looking under 0: enrollments: 0: user_id:
+
+
 
 #### Prompting from terminal
-- curl https://alamo.instructure.com/api/v1/courses/1530834/assignments \
+- curl https://alamo.instructure.com/api/v1/courses/{course_id}/assignments \
      -H 'Authorization: Bearer *API TOKEN*'
 
 #### Prompting from terminal
-- curl https://alamo.instructure.com/api/v1/courses/1530834/assignments \
+- curl https://alamo.instructure.com/api/v1/courses/{course_id}/assignments \
      -H 'Authorization: Bearer *API TOKEN*'
 
 #### Accessing grade data
-https://alamo.instructure.com/api/v1/users/3810399/enrollments
+https://alamo.instructure.com/api/v1/users/{user_id}/enrollments
 
 #### Accessing all students enrolled in a course 
-https://alamo.instructure.com/api/v1/courses/1530834/enrollments
+https://alamo.instructure.com/api/v1/courses/{course_id}/enrollments
 
 #### Accessing all active assignments within a course
-https://alamo.instructure.com/api/v1/courses/1530834/assignments/14467344
+https://alamo.instructure.com/api/v1/courses/{course_id}/assignments/{assignment_id}
 
 #### Accessing course data 
-https://alamo.instructure.com/api/v1/courses/1530834
+https://alamo.instructure.com/api/v1/courses/{course_id}
 
 #### Accessing all past courses
 https://alamo.instructure.com/api/v1/courses
 
 #### Accessing grade data for an individual course
-https://alamo.instructure.com/api/v1/courses/1530834/assignments/14467354/submissions/3810399
+https://alamo.instructure.com/api/v1/courses/{course_id}/assignments/{assignment_id}/submissions/{user_id}
 
 #### Accessing ALL assignments for a course
-https://alamo.instructure.com/api/v1/courses/1530834/assignments/
+https://alamo.instructure.com/api/v1/courses/{user_id}/assignments/
 
 
