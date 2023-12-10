@@ -35,7 +35,7 @@ Same goes for assingment and course data.
 
 #### Prompting from terminal
 - curl https://alamo.instructure.com/api/v1/courses/{course_id}/assignments \
-     -H 'Authorization: Bearer <p style="color:purple;">API TOKEN</p>'
+     -H 'Authorization: Bearer <p> style="color:purple;">API TOKEN</p>'
 
 #### Accessing grade data
 https://alamo.instructure.com/api/v1/users/{user_id}/enrollments
