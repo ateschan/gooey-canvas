@@ -1,6 +1,6 @@
 # Gooey Canvas
 
-This project is built Tauri, Svelte and TypeScript in Vite.
+This project is built in Tauri, using Svelte and TypeScript with Vite.
 
 ## Recommended IDE Setup
 

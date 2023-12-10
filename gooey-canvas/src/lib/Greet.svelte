@@ -1,18 +1,18 @@
 <script lang="ts">
   import { invoke } from "@tauri-apps/api/tauri"
 
-  let name = "";
+  let key = "";
   let greetMsg = ""
 
   async function greet(){
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    greetMsg = await invoke("greet", { name })
+    greetMsg = await invoke("greet", { key })
   }
 </script>
 
 <div>
   <form class="row" on:submit|preventDefault={greet}>
-    <input id="greet-input" placeholder="Enter an API Key..." bind:value={name} />
+    <input id="greet-input" placeholder="Enter an API Key..." bind:value={key} />
     <button type="submit">Greet</button>
   </form>
   <p>{greetMsg}</p>
