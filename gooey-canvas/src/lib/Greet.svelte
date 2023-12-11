@@ -13,7 +13,7 @@
 <div>
   <form class="row" on:submit|preventDefault={greet}>
     <input id="greet-input" placeholder="Enter an API Key..." bind:value={key} />
-    <button type="submit">Greet</button>
+    <button type="submit">Submit</button>
   </form>
   <p>{greetMsg}</p>
 </div>
