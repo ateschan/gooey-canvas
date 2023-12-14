@@ -104,7 +104,6 @@ pub fn get_user() -> User {
     user
 }
 
-// Needs to cycle through pages to return the full list of courses, shouldn't be nessesary for most users
 pub fn get_courses(user_id: i32) -> Vec<Course> {
     match get_data(
         &get_apikey(),
@@ -148,9 +147,6 @@ fn find_name(course_id: i32) -> String {
     return name;
 }
 
-// TODO This function should return a vec of assignments with added grade data
-// Need to write a loop to go through all pages of assignments and call the submissions endpoint
-// still need grade data
 pub fn get_assignments(course_id: i32) -> Vec<Assignment> {
     let mut assignmentlist: Vec<Assignment> = Vec::new();
     let mut page_number = 1;
@@ -227,7 +223,6 @@ fn calculate_score(pts: &mut f32, max_pts: f32) -> f32 {
     return score * 100.0;
 }
 
-// add calculate grade function
 fn calculate_grade(pts: f32) -> String {
     let grade: String;
     if pts >= 90.0 {
