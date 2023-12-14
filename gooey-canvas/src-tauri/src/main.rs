@@ -43,7 +43,7 @@ fn get_user_courses() -> serde_json::Value {
     let courses = canvas::get_courses(user.id);
     let json: serde_json::Value =
         serde_json::from_str(&serde_json::to_string(&courses).unwrap()).unwrap(); // Returns json
-    json //return json string
+    return json //return json string
 }
 
 #[tauri::command]
