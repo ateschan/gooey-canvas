@@ -5,14 +5,10 @@ mod tests;
 #[cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 
-//CONTRIBUTING
-//All endpoints must return json, no funny buisness
-
 fn set_apikey(key: &str) {
     env::set_var("CANVAS_API_KEY", key);
 }
 
-//greet user for api key
 #[tauri::command]
 fn greet(key: &str) -> String {
     if canvas::validate_key(&key) == false {
@@ -23,6 +19,7 @@ fn greet(key: &str) -> String {
     } else {
         println!("Valid API Key");
         set_apikey(key);
+        //tests::test_canvas_functions();
         let user = canvas::get_user();
         let name: &str = &user.name;
         return format!("Hello from rust! Your name is {}", name);
@@ -33,28 +30,27 @@ fn greet(key: &str) -> String {
 fn get_user_courses_assignment(id: i32) -> serde_json::Value {
     let assignments = canvas::get_assignments(id);
     let json: serde_json::Value =
-        serde_json::from_str(&serde_json::to_string(&assignments).unwrap()).unwrap(); // Returns json
+        serde_json::from_str(&serde_json::to_string(&assignments).unwrap()).unwrap();
     return json;
 }
 
 #[tauri::command]
 fn get_user_courses() -> serde_json::Value {
-    let user = canvas::get_user();
+    let user = &canvas::get_user();
     let courses = canvas::get_courses(user.id);
     let json: serde_json::Value =
-        serde_json::from_str(&serde_json::to_string(&courses).unwrap()).unwrap(); // Returns json
-    return json //return json string
+        serde_json::from_str(&serde_json::to_string(&courses).unwrap()).unwrap();
+    return json;
 }
 
 #[tauri::command]
 fn get_user() -> serde_json::Value {
     let user = &canvas::get_user();
     let json: serde_json::Value =
-        serde_json::from_str(&serde_json::to_string(&user).unwrap()).unwrap(); // Returns json
+        serde_json::from_str(&serde_json::to_string(&user).unwrap()).unwrap();
     return json;
 }
 
-//generate handlers for typescript
 fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![

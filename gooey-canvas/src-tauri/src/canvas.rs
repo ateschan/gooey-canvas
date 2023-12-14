@@ -1,4 +1,5 @@
-//A collection of functions for accessing the canvas api
+//A collection of functions for accessing the canvas api, api key  validation and grade calculation
+//are also perfromed here
 use reqwest;
 use serde::{Deserialize, Serialize};
 use serde_json;
@@ -38,7 +39,7 @@ pub struct CourseInfo {
     pub name: String,
 }
 
-#[derive(Serialize, Debug, Deserialize)]
+#[derive(Clone, Serialize, Debug, Deserialize)]
 pub struct Assignment {
     #[serde(rename = "id")]
     pub id: i32,
@@ -49,21 +50,39 @@ pub struct Assignment {
     #[serde(rename = "due_at")]
     pub due: Option<String>,
 
-    pub grade: Option<f32>, // added post deserialization
+    pub num_grade: Option<f32>,
 
+    pub letter_grade: Option<String>, // added post deserialization
     pub submission: Option<Submission>,
 }
 
-#[derive(PartialEq, Serialize, Debug, Deserialize)]
+#[derive(Clone, PartialEq, Serialize, Debug, Deserialize)]
 pub struct Submission {
-    #[serde(rename = "assignment_id")]
-    pub id: i32,
+    #[serde(rename = "id")]
+    pub submission_id: i32,
     #[serde(rename = "score")]
     pub pts: Option<f32>,
-} //uhh I think this works
+}
+
+//Settting env variables
 pub fn get_apikey() -> String {
-    println!("Api Key retrieved");
     env::var("CANVAS_API_KEY").unwrap_or("".to_string())
+}
+
+pub fn validate_key(key: &str) -> bool {
+    let mut valid = true;
+    match get_data(
+        &key,
+        "https://alamo.instructure.com/api/v1/users/self/profile",
+    ) {
+        Ok(body) => {
+            if body.contains("Invalid access token.") || body.contains("unauthenticated") {
+                valid = false;
+            }
+        }
+        Err(e) => eprintln!("Error: {}", e),
+    }
+    valid
 }
 
 pub fn get_user() -> User {
@@ -83,22 +102,6 @@ pub fn get_user() -> User {
         Err(e) => eprintln!("Error: {}", e),
     }
     user
-}
-
-pub fn validate_key(key: &str) -> bool {
-    let mut valid = true;
-    match get_data(
-        &key,
-        "https://alamo.instructure.com/api/v1/users/self/profile",
-    ) {
-        Ok(body) => {
-            if body.contains("Invalid access token.") || body.contains("unauthenticated") {
-                valid = false;
-            }
-        }
-        Err(e) => eprintln!("Error: {}", e),
-    }
-    valid
 }
 
 // Needs to cycle through pages to return the full list of courses, shouldn't be nessesary for most users
@@ -164,7 +167,27 @@ pub fn get_assignments(course_id: i32) -> Vec<Assignment> {
                     // No more assignments, so break out of the loop
                     break;
                 }
-                for assignment in &mut assignments {}
+                for assignment in assignments.iter_mut() {
+                    assignment.submission = Some(get_submission(course_id, assignment.id));
+                    let sub = assignment.submission.clone();
+                    if sub.clone().unwrap().pts == None {
+                        assignment.letter_grade = Some("N/A".to_string());
+                    } else if assignment.pts == None {
+                        assignment.letter_grade = Some("N/A".to_string());
+                    } else if &assignment.pts.unwrap() == &0.0 {
+                        assignment.letter_grade = Some("N/A".to_string());
+                        assignment.num_grade = Some(0.0);
+                    } else {
+                        assignment.letter_grade = Some(calculate_grade(calculate_score(
+                            &mut sub.clone().unwrap().pts.unwrap(),
+                            assignment.pts.unwrap(),
+                        )));
+                        assignment.num_grade = Some(calculate_score(
+                            &mut sub.clone().unwrap().pts.unwrap(),
+                            assignment.pts.unwrap(),
+                        ));
+                    }
+                }
                 assignmentlist.append(&mut assignments);
             }
             Err(e) => eprintln!("Error: {}", e),
@@ -175,7 +198,10 @@ pub fn get_assignments(course_id: i32) -> Vec<Assignment> {
 }
 
 fn get_submission(course_id: i32, assignment_id: i32) -> Submission {
-    let mut submission = Submission { id: 0, pts: None };
+    let mut submission = Submission {
+        submission_id: 0,
+        pts: None,
+    };
     match get_data(
         &get_apikey(),
         &format!(
@@ -189,6 +215,16 @@ fn get_submission(course_id: i32, assignment_id: i32) -> Submission {
         Err(e) => eprintln!("Error: {}", e),
     }
     submission
+}
+
+fn calculate_score(pts: &mut f32, max_pts: f32) -> f32 {
+    let score: f32;
+    if pts == &mut 0.0 {
+        score = 0.0;
+    } else {
+        score = *pts / max_pts;
+    }
+    return score * 100.0;
 }
 
 // add calculate grade function
