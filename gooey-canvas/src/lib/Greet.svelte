@@ -4,7 +4,7 @@
   let key = "";
   let greetMsg = "";
 
-  let courseData = ""; //Holds API Data
+  let courseData: Object[] = []; //Holds API Data
   let classesText = ""; //Shows "Classes:" when greet executes
 
   async function greet() {
@@ -13,6 +13,11 @@
     courseData = await invoke("get_user_courses");
 
     classesText = "Classes:";
+
+    //for each assigns the isShowing key value pair to each courseData object
+    courseData.forEach((course) => {
+      course.isShowing = false;
+    });
   }
 </script>
 
@@ -28,14 +33,21 @@
   <p>{greetMsg}</p>
   <h3>{classesText}</h3>
 
-  <!--TODO add button support to show something when clicked-->
-  <!--Attempted creating a toggle function to handle this, got scared and went home-->
+  <!--Callback function in button is used to open and close each course tab-->
+  <!--TODO: add styles and maybe background in if statement-->
   <!--Errors are showing for object item and its keys, not sure why-->
   <ol>
-    {#each courseData as item, index (item.course_id)}
+    {#each courseData as course, index}
       <li>
-        <button>{item.course_name}</button>
+        <button
+          on:click={() => {
+            courseData[index].isShowing = !courseData[index].isShowing;
+          }}>{course.course_name}</button
+        >
       </li>
+      {#if course.isShowing}
+        <h3>Grade: {course.grades.current_grade}</h3>
+      {/if}
     {/each}
   </ol>
 </div>
