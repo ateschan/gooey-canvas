@@ -1,5 +1,5 @@
 # gooey-canvas
-make sure to follow the installation guide written for your os on tauri's [website](https://tauri.app/v1/guides/getting-started/prerequisites}
+make sure to follow the installation guide written for your os on tauri's [website](https://tauri.app/v1/guides/getting-started/prerequisites)
 
 # Installation
 ```
