@@ -14,22 +14,10 @@
 
 .container {
     margin: 0;
-    padding-top: 10vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     text-align: center;
-}
-
-.logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
-    transition: 0.75s;
-}
-
-.logo.tauri:hover {
-    filter: drop-shadow(0 0 2em #24c8db);
 }
 
 .row {
@@ -69,8 +57,18 @@ button {
     cursor: pointer;
 }
 
-li>button {
+.course-button {
     width: 15em;
+}
+
+.header {
+    display: flex;
+    justify-content: left;
+    padding-left: 2vw;
+}
+
+.greet-section {
+    padding-top: 10vh;
 }
 
 button:hover {

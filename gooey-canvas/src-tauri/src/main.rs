@@ -22,7 +22,7 @@ fn greet(key: &str) -> String {
         //tests::test_canvas_functions();
         let user = canvas::get_user();
         let name: &str = &user.name;
-        return format!("Hello from rust! Your name is {}", name);
+        return format!("Hello {}", name);
     }
 }
 
