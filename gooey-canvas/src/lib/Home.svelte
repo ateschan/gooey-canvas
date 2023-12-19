@@ -7,7 +7,7 @@
   let courseData: Object[] = [];
 
   async function loadData() {
-    courseData = await invoke("get_user_courses");
+    courseData = await invoke("mock_get_user_courses");
     return courseData;
   }
 
