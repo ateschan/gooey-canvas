@@ -5,9 +5,12 @@
   import { title } from "./stores";
 
   let courseData: Object[] = [];
-
+  let courseId : i32 = 1;
+  let assignments: Object[] = [];
   async function loadData() {
     courseData = await invoke("mock_get_user_courses");
+    assignments = await invoke("mock_get_user_courses_assignment", { courseId });
+    console.log(assignments);
     return courseData;
   }
 

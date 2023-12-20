@@ -1,69 +1,9 @@
 //A collection of functions for accessing the canvas api, api key  validation and grade calculation
 //are also perfromed here
-use reqwest;
-use serde::{Deserialize, Serialize};
-use serde_json;
-use std::env;
 
-#[derive(Serialize, Debug, Deserialize)]
-pub struct User {
-    #[serde(rename = "id")]
-    pub id: i32,
-    #[serde(rename = "name")]
-    pub name: String,
-    #[serde(rename = "avatar_url")]
-    pub pic: String,
-}
+use crate::canvas::canvas::{Assignment, Course, Grades, Submission, User};
 
-#[derive(Serialize, Debug, Deserialize)]
-pub struct Course {
-    #[serde(rename = "course_id")]
-    pub id: i32,
-    #[serde(rename = "created_at")]
-    pub date: String,
-    #[serde(rename = "grades")]
-    pub grades: Grades,
-    pub course_name: Option<String>, // added post deserialization
-}
-
-#[derive(Serialize, Debug, Deserialize)]
-pub struct Grades {
-    #[serde(rename = "current_grade")]
-    pub letter_grade: Option<String>,
-    #[serde(rename = "current_score")]
-    pub number_grade: Option<f32>,
-}
-
-#[derive(Debug, Deserialize)]
-pub struct CourseInfo {
-    pub name: String,
-}
-
-#[derive(Clone, Serialize, Debug, Deserialize)]
-pub struct Assignment {
-    #[serde(rename = "id")]
-    pub id: i32,
-    #[serde(rename = "name")]
-    pub name: String,
-    #[serde(rename = "points_possible")]
-    pub pts: Option<f32>,
-    #[serde(rename = "due_at")]
-    pub due: Option<String>,
-
-    pub num_grade: Option<f32>,
-
-    pub letter_grade: Option<String>, // added post deserialization
-    pub submission: Option<Submission>,
-}
-
-#[derive(Clone, PartialEq, Serialize, Debug, Deserialize)]
-pub struct Submission {
-    #[serde(rename = "id")]
-    pub submission_id: i32,
-    #[serde(rename = "score")]
-    pub pts: Option<f32>,
-}
-pub fn return_mockedcourses(num: i32) -> Vec<Course> {
+pub fn return_mockedcourses(_num: i32) -> Vec<Course> {
     let mockcourses: Vec<Course> = vec![
         Course {
             id: 1,
@@ -115,7 +55,7 @@ pub fn return_mockedcourses(num: i32) -> Vec<Course> {
     return mockcourses;
 }
 
-pub fn return_mockedassignments(num: i32) -> Vec<Assignment> {
+pub fn return_mockedassignments(_num: i32) -> Vec<Assignment> {
     let mockassignments: Vec<Assignment> = vec![
         Assignment {
             id: 1,

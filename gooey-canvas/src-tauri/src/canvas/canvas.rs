@@ -1,9 +1,9 @@
 //A collection of functions for accessing the canvas api, api key  validation and grade calculation
 //are also perfromed here
+use super::apikey::get_apikey;
 use reqwest;
 use serde::{Deserialize, Serialize};
 use serde_json;
-use std::env;
 
 #[derive(Serialize, Debug, Deserialize)]
 pub struct User {
@@ -64,28 +64,7 @@ pub struct Submission {
     pub pts: Option<f32>,
 }
 
-//Settting env variables
-pub fn get_apikey() -> String {
-    env::var("CANVAS_API_KEY").unwrap_or("".to_string())
-}
-
-pub fn validate_key(key: &str) -> bool {
-    let mut valid = true;
-    match get_data(
-        &key,
-        "https://alamo.instructure.com/api/v1/users/self/profile",
-    ) {
-        Ok(body) => {
-            if body.contains("Invalid access token.") || body.contains("unauthenticated") {
-                valid = false;
-            }
-        }
-        Err(e) => eprintln!("Error: {}", e),
-    }
-    valid
-}
-
-pub fn get_user() -> User {
+pub fn canvas_get_user() -> User {
     let mut user = User {
         id: 0,
         name: "".to_string(),
@@ -104,7 +83,7 @@ pub fn get_user() -> User {
     user
 }
 
-pub fn get_courses(user_id: i32) -> Vec<Course> {
+pub fn canvas_get_courses(user_id: i32) -> Vec<Course> {
     match get_data(
         &get_apikey(),
         &format!(
@@ -147,7 +126,7 @@ fn find_name(course_id: i32) -> String {
     return name;
 }
 
-pub fn get_assignments(course_id: i32) -> Vec<Assignment> {
+pub fn canvas_get_assignments(course_id: i32) -> Vec<Assignment> {
     let mut assignmentlist: Vec<Assignment> = Vec::new();
     let mut page_number = 1;
     loop {
@@ -239,7 +218,7 @@ fn calculate_grade(pts: f32) -> String {
     return grade;
 }
 
-fn get_data(key: &str, url: &str) -> Result<String, reqwest::Error> {
+pub fn get_data(key: &str, url: &str) -> Result<String, reqwest::Error> {
     let client = reqwest::blocking::Client::new();
     let response = client
         .get(url)
